@@ -6,7 +6,11 @@ client = Client('http://rubenromero-001-site1.itempurl.com/WCFReservaVehiculos.s
 credentials = { 'Credentials': { 'UserName': 'grupo_nro4', 'Password': '5PaNNiAqys' } }
 
 def consultar_paises():
-    return client.service.ConsultarPaises(_soapheaders=credentials)['Paises']['PaisEntity']
+    paises_list = []
+    response = client.service.ConsultarPaises(_soapheaders=credentials)['Paises']['PaisEntity']
+    for pais in response:
+        paises_list.append({'id': pais['Id'], 'nombre': pais['Nombre']})
+    return paises_list
 
 def cancelar_reserva():
     return "Not implented"
