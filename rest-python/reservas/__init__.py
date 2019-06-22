@@ -14,7 +14,7 @@ client_kwargs = {
         'scope': 'https://www.googleapis.com/auth/userinfo.profile'
 }
 
-redirect_uri = "http://localhost:5000/auth"
+redirect_uri = "http://localhost:50956/Front/Login.html"
 oauth = OAuth(app)
 google = oauth.register(
         name='google',
@@ -29,23 +29,18 @@ google = oauth.register(
 
 @app.before_request
 def verify_login():
-    access_code = request.args.get('access_code')
+    access_code = request.args['code']
     if access_code:
-        request._reservas = { "user": "JUAN" }
+        google.get()
+        response = { "user_code": "1234", "nombre": "Juan Perez" }
+        request._reservas = { "user_code": "1234", "nombre": "Juan Perez" }
         # VALIDAR ACCESS_CODE, SETEAR USUARIO DE SESION
-        return
-    #auth_code = request.args.get('authorization_code')
-    auth_code = request.args.get('code')
-    if auth_code:
-        # Hago este save porque sino se queja de que no hay redirect uri
-        google.save_authorize_state(redirect_uri=redirect_uri)
-        token = google.authorize_access_token()['access_token']
-        response = google.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json")
-        nombre = response.json()['name']
-        user_id = response.json()['id']
-        # GUARDAR USUARIO EN BD (SI NO EXISTE)
-        # REGISTRAR SESION CON ACCESS_TOKEN => USUARIO
-        return jsonify({ "access_code": token, "nombre": nombre }), 201
+        return jsonify(response)
+    user_code = request.headers['user_code']
+    if user_code:
+        print("usuario")
+        # VALIDAR USUARIO
+        # USUARIO LOGEADO
     return "No autorizado \n", 401
 
 @app.route('/user')
