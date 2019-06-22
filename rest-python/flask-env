@@ -1,0 +1,2 @@
+export FLASK_APP=reservas
+export FLASK_ENVIRONMENT=development
