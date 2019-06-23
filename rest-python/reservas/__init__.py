@@ -3,6 +3,7 @@ from flask_restful import Api
 import requests
 from reservas.paises import Paises
 from reservas.usuarios import Usuarios
+from reservas.ciudades import Ciudades
 import uuid
 
 app = Flask(__name__)
@@ -53,6 +54,7 @@ def verify_login():
             return "No autorizado \n", 401
 
 api.add_resource(Paises, '/paises')
+api.add_resource(Ciudades, '/ciudades')
 
 if __name__ == '__main__':
     app.run(debug=True)
