@@ -15,14 +15,14 @@ class Usuarios():
         return conn
 
     def exists(self, email):
-        conn = _open_connection()
+        conn = self._open_connection()
         cur = conn.cursor()
-        cur.execute("""SELECT * FROM users WHERE mail=%s);""", (email))
+        cur.execute("""SELECT * FROM users WHERE mail=%s;""", (email,))
         query = cur.fetchone()
 
         it_exists = False
         # Existe valor en tabla
-        if len(query) > 0:
+        if query:
             self.last_query = query
             it_exists = True
         cur.close()
@@ -33,25 +33,25 @@ class Usuarios():
         if self.last_query:
             if self.last_query[2] == email:
                 return {'id': self.last_query[0], 'nombre': self.last_query[1]}
-        conn = _open_connection()
+        conn = self._open_connection()
         cur = conn.cursor()
-        cur.execute("""SELECT * FROM users WHERE mail=%s);""", (email))
+        cur.execute("""SELECT * FROM users WHERE mail=%s;""", (email,))
         query = cur.fetchone()
         usuario = None
         # Existe valor en tabla
-        if len(query) > 0:
+        if query:
                 usuario = {'id': query[0], 'nombre': query[1]}
         cur.close()
         conn.close()
         return usuario
 
     def create(self, email, name):
-        conn = _open_connection()
+        conn = self._open_connection()
         cur = conn.cursor()
         cur.execute("""INSERT INTO users (name, mail) VALUES (%s, %s);""", (name ,email))
         print("USUARIO {} CREADO".format(email))
         conn.commit()
-        cur.execute("""SELECT * FROM users WHERE mail=%s);""", (email))
+        cur.execute("""SELECT * FROM users WHERE mail=%s;""", (email,))
         query = cur.fetchone()
         cur.close()
         conn.close()

@@ -17,10 +17,28 @@ client_secret="tUTzYtkGtiR9BSi091zFTyY5"
 @app.before_request
 def verify_login():
     access_code = request.args.get('code')
+    autorizado = False
     if access_code:
+        payload = {
+                'code': access_code,
+                'redirect_uri': 'http://localhost:50956/Front/Login.html',
+                'client_id': client_id,
+                'client_secret': client_secret,
+                'scope': '',
+                'grant_type': 'authorization_code'
+                }
+        code_response = requests.post("https://www.googleapis.com/oauth2/v4/token", data=payload)
+        print(code_response.request.url)
+        print(code_response.request.headers)
+        print('')
+        print(code_response._content)
+        print(code_response.json())
+        access_code = code_response.json()['access_token']
         g_headers = {'Authorization': 'Bearer {}'.format(access_code)}
-        g_response = requests.get('https://www.googleapis.com/oauth2/v2/userinfo', headers)
+        g_response = requests.get('https://www.googleapis.com/oauth2/v2/userinfo', headers=g_headers)
         if not g_response.ok:
+            print('[ERROR] {}'.format(g_response.request.url))
+            print('[ERROR] {}'.format(g_response.request.headers))
             print('[ERROR] ACCESS CODE FALLO')
             print('[ERROR] {}'.format(g_headers))
             print('[ERROR] {}'.format(g_response._content))
@@ -30,7 +48,7 @@ def verify_login():
         user_email = j['email']
         user_name = j['name']
         # VER SI USUARIO EXISTE
-        users = Users()
+        users = Usuarios()
         user = None
         if users.exists(user_email):
             user = users.fetch(user_email)
@@ -40,7 +58,7 @@ def verify_login():
         sesiones = app._sesiones
         sesion_id = uuid.uuid4()
         sesiones[sesion_id] = user
-        response = {'user_code': sesion_id, 'nombre': user.nombre}
+        response = {'user_code': sesion_id, 'nombre': user['nombre']}
         return jsonify(response)
     user_code = request.headers.get('user_code')
     if user_code:
@@ -49,9 +67,12 @@ def verify_login():
         try:
             sesion = app._sesiones[user_code]
             request._sesion = sesion
+            autorizado = True
         except KeyError:
             # No se encontraba id de sesion en sesiones
             return "No autorizado \n", 401
+    if not autorizado:
+        return "No autorizado \n", 401
 
 api.add_resource(Paises, '/paises')
 api.add_resource(Ciudades, '/ciudades')
