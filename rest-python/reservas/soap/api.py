@@ -35,5 +35,59 @@ def consultar_vehiculos_disponibles(id_ciudad, fecha_hora_retiro, fecha_hora_dev
     except Exception as e:
         return e
 
-def reservar_vehiculo():
-    return "Not implented"
+def reservar_vehiculo(nombre_cliente, dt_devolucion, dt_retiro, id_vehiculociudad, lugar_devolucion, lugar_retiro, dni):
+    """
+    {
+    'Reserva': {
+        'ApellidoNombreCliente': 'Juan Perez',
+        'CodigoReserva': '8EZTY',
+        'Estado': 'Activa',
+        'FechaCancelacion': None,
+        'FechaHoraDevolucion': datetime.datetime(2019, 10, 21, 0, 0),
+        'FechaHoraRetiro': datetime.datetime(2019, 10, 21, 0, 0),
+        'FechaReserva': datetime.datetime(2019, 6, 22, 19, 35, 21, 450967, tzinfo=<FixedOffset '-07:00'>),
+        'Id': 85,
+        'LugarDevolucion': 'Hotel',
+        'LugarRetiro': 'Hotel',
+        'NroDocumentoCliente': '398405198',
+        'TotalReserva': Decimal('0'),
+        'UsuarioCancelacion': None,
+        'UsuarioReserva': 'grupo_nro4',
+        'VehiculoPorCiudadEntity': {
+            'CantidadDisponible': 2,
+            'CiudadEntity': {
+                'Id': None,
+                'Nombre': None,
+                'PaisEntity': None,
+                'PaisId': None
+            },
+            'CiudadId': 8,
+            'Id': 23,
+            'VehiculoEntity': {
+                'CantidadPuertas': 2,
+                'Id': 8,
+                'Marca': 'Chevrolet',
+                'Modelo': 'Celta',
+                'PrecioPorDia': Decimal('300'),
+                'Puntaje': '3',
+                'TieneAireAcon': True,
+                'TieneDireccion': True,
+                'TipoCambio': 'M'
+            },
+            'VehiculoId': 8
+        },
+        'VehiculoPorCiudadId': 23
+    },
+    'TimeStamp': datetime.datetime(2019, 6, 22, 19, 35, 21, 904135, tzinfo=<FixedOffset '-07:00'>)
+    }
+    """
+    request_data = {
+            'ApellidoNombreCliente': nombre_cliente,
+            'FechaHoraDevolucion': dt_devolucion,
+            'FechaHoraRetiro': dt_retiro,
+            'IdVehiculoCiudad': id_vehiculociudad,
+            'LugarDevolucion': lugar_devolucion,
+            'LugarRetiro': lugar_retiro,
+            'NroDocumentoCliente': dni
+            }
+    return client.service.ReservarVehiculo(request_data, _soapheaders=credentials)
