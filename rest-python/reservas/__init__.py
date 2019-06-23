@@ -4,6 +4,8 @@ import requests
 from reservas.paises import Paises
 from reservas.usuarios import Usuarios
 from reservas.ciudades import Ciudades
+import reservas.soap.api as api_soap
+from reservas.utils import fecha_string_to_dt
 import uuid
 
 app = Flask(__name__)
@@ -73,6 +75,34 @@ def verify_login():
             return "No autorizado \n", 401
     if not autorizado:
         return "No autorizado \n", 401
+
+@app.route('/vehiculos_disponibles')
+def vehiculos_disponibles():
+    ciudad = request.args.get('ciudad')
+    fecha_retiro = request.args.get('fecha_retiro')
+    fecha_devolucion = request.args.get('fecha_devolucion')
+    fecha_retiro = fecha_string_to_dt(fecha_retiro)
+    fecha_devolucion = fecha_string_to_dt(fecha_devolucion)
+    api_response = api_soap.consultar_vehiculos_disponibles(ciudad, fecha_retiro, fecha_devolucion)
+    response_data = []
+    for r in api_response:
+        data = {
+            'CantidadDisponible': r['CantidadDisponible'],
+            'CantidadPuertas': r['CantidadPuertas'],
+            'CiudadId': r['CiudadId'],
+            'Id': r['Id'],
+            'Marca': r['Marca'],
+            'Modelo': r['Modelo'],
+            'PrecioPorDia': float(r['PrecioPorDia']) + float(r['PrecioPorDia'])*0.2,
+            'Puntaje': r['Puntaje'],
+            'TieneAireAcon': r['TieneAireAcon'],
+            'TieneDireccion': r['TieneDireccion'],
+            'TipoCambio': r['TipoCambio'],
+            'VehiculoCiudadId': r['VehiculoCiudadId']
+            }
+        response_data.append(data)
+    return jsonify(response_data)
+
 
 api.add_resource(Paises, '/paises')
 api.add_resource(Ciudades, '/ciudades')

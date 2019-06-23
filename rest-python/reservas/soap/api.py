@@ -27,6 +27,23 @@ def consultar_vehiculos_disponibles(id_ciudad, fecha_hora_retiro, fecha_hora_dev
     fecha_hora_retiro: datetime.datetime
     fecha_hora_devolucion: datetime.datetime
     """
+    """
+    RESPONSE
+    [{
+    'CantidadDisponible': 24,
+    'CantidadPuertas': 4,
+    'CiudadId': 2,
+    'Id': 6,
+    'Marca': 'Ford',
+    'Modelo': 'Fiesta',
+    'PrecioPorDia': Decimal('800'),
+    'Puntaje': '5',
+    'TieneAireAcon': True,
+    'TieneDireccion': True,
+    'TipoCambio': 'A',
+    'VehiculoCiudadId': 58
+    }, {
+    """
     request_data = { 'IdCiudad': id_ciudad,
                      'FechaHoraRetiro': fecha_hora_retiro,
                      'FechaHoraDevolucion': fecha_hora_devolucion }
