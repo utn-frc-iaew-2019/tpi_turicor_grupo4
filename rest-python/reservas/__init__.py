@@ -1,64 +1,56 @@
 from flask import Flask, url_for, request, jsonify
 from flask_restful import Api
-from authlib.flask.client import OAuth
+import requests
 from reservas.paises import Paises
+from reservas.usuarios import Usuarios
+import uuid
 
 app = Flask(__name__)
 api = Api(app)
+app._sesiones = {}
 
 app.secret_key = "secretaso"
 client_id='571953119627-2ss3p3se07dfm8li63fuc9afjbmsrb43.apps.googleusercontent.com'
 client_secret="tUTzYtkGtiR9BSi091zFTyY5"
 
-client_kwargs = {
-        'scope': 'https://www.googleapis.com/auth/userinfo.profile'
-}
-
-redirect_uri = "http://localhost:50956/Front/Login.html"
-oauth = OAuth(app)
-google = oauth.register(
-        name='google',
-        client_id=client_id,
-        client_secret=client_secret,
-        access_token_url='https://www.googleapis.com/oauth2/v4/token',
-        authorize_url='https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent',
-        redirect_uri=redirect_uri,
-#        api_base_url='https://www.googleapis.com',
-        client_kwargs=client_kwargs
-)
-
 @app.before_request
 def verify_login():
-    access_code = request.args['code']
+    access_code = request.args.get('code')
     if access_code:
-        google.get()
-        response = { "user_code": "1234", "nombre": "Juan Perez" }
-        request._reservas = { "user_code": "1234", "nombre": "Juan Perez" }
-        # VALIDAR ACCESS_CODE, SETEAR USUARIO DE SESION
+        g_headers = {'Authorization': 'Bearer {}'.format(access_code)}
+        g_response = requests.get('https://www.googleapis.com/oauth2/v2/userinfo', headers)
+        if not g_response.ok:
+            print('[ERROR] ACCESS CODE FALLO')
+            print('[ERROR] {}'.format(g_headers))
+            print('[ERROR] {}'.format(g_response._content))
+            return "No autorizado \n", 401
+
+        j = g_response.json()
+        user_email = j['email']
+        user_name = j['name']
+        # VER SI USUARIO EXISTE
+        users = Users()
+        user = None
+        if users.exists(user_email):
+            user = users.fetch(user_email)
+        else:
+            user = users.create(user_name, user_email)
+        # CREAR SESION
+        sesiones = app._sesiones
+        sesion_id = uuid.uuid4()
+        sesiones[sesion_id] = user
+        response = {'user_code': sesion_id, 'nombre': user.nombre}
         return jsonify(response)
-    user_code = request.headers['user_code']
+    user_code = request.headers.get('user_code')
     if user_code:
-        print("usuario")
+        print("USER_CODE")
         # VALIDAR USUARIO
-        # USUARIO LOGEADO
-    return "No autorizado \n", 401
-
-@app.route('/user')
-def user():
-    print()
-    return request._reservas['user']
-
-@app.route('/login')
-def login():
-    client = oauth.create_client('google')
-    #redirect_uri = 'http://reservasiaew.com/auth'
-    return client.authorize_redirect(redirect_uri)
-
-@app.route('/auth')
-def authorize():
-    print("ESTOY VINIENDO POR ACA POR PAJA")
-    print(request.args.get('code'))
-    return "DONE"
+        try:
+            sesion = app._sesiones[user_code]
+            request._sesion = sesion
+        except KeyError:
+            # No se encontraba id de sesion en sesiones
+            return "No autorizado \n", 401
 
 api.add_resource(Paises, '/paises')
 
