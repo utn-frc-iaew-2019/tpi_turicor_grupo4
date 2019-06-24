@@ -33,7 +33,7 @@ descripcion TEXT NOT NULL);
 cur.execute("""
 CREATE TABLE reservas (
 id SERIAL PRIMARY KEY,
-codigo INT NOT NULL,
+codigo TEXT NOT NULL,
 vehiculo_ciudad_id INT NOT NULL,
 ciudad TEXT NOT NULL,
 vehiculo TEXT NOT NULL,

@@ -4,6 +4,7 @@ import requests
 from reservas.paises import Paises
 from reservas.usuarios import Usuarios
 from reservas.ciudades import Ciudades
+from reservas.reservas import Reservas
 import reservas.soap.api as api_soap
 from reservas.utils import fecha_string_to_dt
 import uuid
@@ -27,6 +28,8 @@ def verify_login():
         print(request.headers)
         access_code = request.args.get('code')
         autorizado = False
+        #autorizado = True
+        #request._sesion = {'id': 1}
         if access_code:
             payload = {
                     'code': access_code,
@@ -67,7 +70,7 @@ def verify_login():
             sesiones = app._sesiones
             sesion_id = str(uuid.uuid4())
             sesiones[sesion_id] = user
-            response = {'user_code': sesion_id, 'nombre': user['nombre']}
+            response = {'user_code': sesion_id, 'nombre': user['nombre'], 'id': user['id']}
             return jsonify(response)
         user_code = request.headers.get('user_code')
         print(user_code)
@@ -118,6 +121,7 @@ def login():
 
 api.add_resource(Paises, '/paises')
 api.add_resource(Ciudades, '/ciudades')
+api.add_resource(Reservas, '/reservas')
 
 if __name__ == '__main__':
     app.run(debug=True)
