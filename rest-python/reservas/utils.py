@@ -13,3 +13,14 @@ def fecha_string_to_dt(fecha):
         
         dt = datetime(año, mes, dia, hora, mins, segs)
         return dt
+
+def fecha_dt_to_string(fecha):
+        fecha_formateada = "{0}/{1}/{2} {3}:{4}:{5}".format(
+                fecha.day,
+                fecha.month,
+                fecha.year,
+                fecha.hour,
+                fecha.minute,
+                fecha.second)
+        return fecha_formateada
+

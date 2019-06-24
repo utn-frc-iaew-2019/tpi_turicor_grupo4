@@ -1,10 +1,42 @@
 from flask_restful import Resource
 from flask import request 
 from reservas.soap import api
-from reservas.utils import fecha_string_to_dt
+from reservas.utils import fecha_string_to_dt, fecha_dt_to_string
 import psycopg2
 
 class Reservas(Resource):
+
+    def get(self):
+        print("GET RESERVA")
+        conn = psycopg2.connect(
+            database='iaew',
+            user='postgres',
+            password='iaew',
+            host='127.0.0.1',
+            port='5432'
+            )
+        print("DB CONNECT")
+        cur = conn.cursor()
+        cliente_id = request._sesion['id']
+        cur.execute("""SELECT * FROM reservas WHERE cliente=%s;""", (cliente_id,))
+        reservas = []
+        for r in cur:
+            data = {
+                    'codigo_reserva': r[1],
+                    'fecha_reserva': fecha_dt_to_string(r[5]),
+                    'fecha_retiro': fecha_dt_to_string(r[6]),
+                    'fecha_devolucion': fecha_dt_to_string(r[7]),
+                    'lugar_retiro': r[8],
+                    'lugar_devolucion': r[9],
+                    'precio_total': r[12],
+                    'vehiculo': r[4],
+                    'vehiculo_ciudad_id': r[2],
+                    'ciudad': r[3]
+                    }
+            reservas.append(data)
+        return reservas
+
+
 
     def post(self):
         print("POST RESERVA")
