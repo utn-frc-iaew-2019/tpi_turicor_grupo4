@@ -12,14 +12,17 @@ def consultar_paises():
         paises_list.append({'id': pais['Id'], 'nombre': pais['Nombre']})
     return paises_list
 
-def cancelar_reserva():
-    return "Not implented"
+def cancelar_reserva(codigo):
+    """
+    Returns ReservaEntity
+    """
+    return client.service.CancelarReserva({ 'CodigoReserva': codigo }, _soapheaders=credentials)
 
 def consultar_ciudades(id_pais):
     return client.service.ConsultarCiudades({'IdPais': id_pais}, _soapheaders=credentials)['Ciudades']['CiudadEntity']
 
-def consultar_reserva():
-    return "Not implented"
+def consultar_reserva(codigo):
+    return client.service.ReservarVehiculo({ 'CodigoReserva': codigo }, _soapheaders=credentials)
 
 def consultar_vehiculos_disponibles(id_ciudad, fecha_hora_retiro, fecha_hora_devolucion):
     """

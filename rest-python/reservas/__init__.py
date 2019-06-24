@@ -5,6 +5,7 @@ from reservas.paises import Paises
 from reservas.usuarios import Usuarios
 from reservas.ciudades import Ciudades
 from reservas.reservas import Reservas
+from reservas.reserva import Reserva
 import reservas.soap.api as api_soap
 from reservas.utils import fecha_string_to_dt
 import uuid
@@ -122,6 +123,7 @@ def login():
 api.add_resource(Paises, '/paises')
 api.add_resource(Ciudades, '/ciudades')
 api.add_resource(Reservas, '/reservas')
+api.add_resource(Reserva, '/reservas/<reserva_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
