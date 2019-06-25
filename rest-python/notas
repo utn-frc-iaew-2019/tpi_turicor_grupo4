@@ -1,0 +1,5 @@
+>>> r = requests.get('https://www.googleapis.com/oauth2/v2/userinfo', headers=header)
+>>> j = r.json()
+>>> j
+{'id': '114677233336683104526', 'email': 'agustinborello21@gmail.com', 'verified_email': True, 'name': 'Agustin Borello', 'given_name': 'Agustin', 'family_name': 'Borello', 'picture': 'https://lh5.googleusercontent.com/-Z5s8tIDM47g/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcCpu9RDK5RZp9NP0LyYHZgn4O1aw/mo/photo.jpg', 'locale': 'es'}
+
