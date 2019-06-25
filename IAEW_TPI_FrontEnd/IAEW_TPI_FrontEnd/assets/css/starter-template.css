@@ -1,0 +1,98 @@
+body {
+    padding-top: 1rem;
+}
+
+.starter-template {
+    padding: 3rem 1.5rem;
+}
+
+.navbar {
+    background-color: #003e94 !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.navbar-brand {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.navbar-nav .nav-link {
+    padding-top: 5px !important;
+    padding-bottom: 0px !important;
+}
+
+.nav-tabs .nav-item .nav-link {
+    font-weight: bold;
+}
+
+.table-title {
+    padding-left: 15px;
+}
+
+.form-group {
+    padding-left: 10px;
+}
+
+.loginmodal-container {
+    padding: 30px;
+    max-width: 350px;
+    width: 100% !important;
+    background-color: #F7F7F7;
+    margin: 0 auto;
+    margin-top: 70px;
+    border-radius: 2px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: inherit;
+}
+
+    .loginmodal-container h1 {
+        text-align: center;
+        font-size: 1.8em;
+        font-family: inherit;
+    }
+
+    .loginmodal-container a {
+        width: 100%;
+        height: 44px;
+        font-size: 16px;
+        display: block;
+        margin-bottom: 10px;
+        position: relative;
+        -webkit-appearance: none;
+        background: #000080;
+        border: 1px solid #d9d9d9;
+        border-top: 1px solid #c0c0c0;
+        /* border-radius: 2px; */
+        padding: 8px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        color: antiquewhite;
+        text-align:center;
+        vertical-align:middle;
+        
+    }
+
+        .loginmodal-container a:hover {
+            border: 1px solid #b9b9b9;
+            border-top: 1px solid #a0a0a0;
+            -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            background: #0094ff;
+            text-decoration: none;
+        }
+
+.loginmodal {
+    text-align: center;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    /* border-radius: 3px; */
+    /* -webkit-user-select: none;
+  user-select: none; */
+}
+

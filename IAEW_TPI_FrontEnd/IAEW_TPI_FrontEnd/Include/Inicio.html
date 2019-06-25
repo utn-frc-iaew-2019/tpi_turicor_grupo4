@@ -1,0 +1,22 @@
+﻿<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+    <a class="navbar-brand">
+        <img src="../assets/img/favicon.png" />
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="../Front/Reserva.html"><h5><b>Reserva<span class="sr-only">(current)</span></b></h5></a>
+            </li>
+           <li class="nav-item">
+                <a class="nav-link" href="../Front/MisReservas.html">Mis reservas</a>
+           </li>
+        </ul>
+        <div class="form-inline my-2 my-lg-0">
+            <div ID="pnlCerrarSesion" runat="server">
+                <asp:LinkButton ID="btnCerrarSesion" CssClass="btn btn-outline-light my-2 my-sm-0" Text="Cerrar sesión" runat="server" onclientclick=""/>
+                <!--<a class="btn btn-outline-light my-2 my-sm-0" onclick="deleteCookie('FarStock-IdLanzador');" href="Login.aspx" >Cerrar sesión</a>-->
+            </div>
+        </div>
+    </div>
+</nav>

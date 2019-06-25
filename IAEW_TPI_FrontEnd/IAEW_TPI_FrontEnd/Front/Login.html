@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../assets/img/favicon.png" />
+    <title>TuriCor</title>
+
+    <!-- CSS -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../assets/css/starter-template.css" rel="stylesheet" />
+
+    <!-- Js -->
+    <script src="../assets/js/jquery-3.4.1.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <script src="../assets/js/login.js"></script>
+</head>
+<body>
+    <form id="Form1" runat="server">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+            <a class="navbar-brand">
+                <img src="../assets/img/icono.png" />
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href=""><h5>TuriCor</h5></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="loginmodal-container">
+            <h1>Bienvenido!</h1><br />
+            <a class="login" id="btnLogin" href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&response_type=code&client_id=571953119627-2ss3p3se07dfm8li63fuc9afjbmsrb43.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A50956%2FFront%2FLogin.html&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile">Iniciar sesión vía Google</a>
+        </div>
+        <div class="modal" id="modalError" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label>Error</label>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12" style="margin-left:10px;margin-right:10px;">
+                                <label id="lblError" style="margin-top:5px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="offset-8 col-4">
+                            <a href="javascript:void(0)" class="btn btn-primary col-12" onclick="hideError();">Aceptar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script language="javascript" type="text/javascript">
+            function showError() {
+                $('#modalError').modal('show');
+            }
+            $('#modalError').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            hideError();
+            function hideError() {
+                $('#modalError').modal('hide');
+            }
+        </script>
+    </form>
+</body>
+</html>

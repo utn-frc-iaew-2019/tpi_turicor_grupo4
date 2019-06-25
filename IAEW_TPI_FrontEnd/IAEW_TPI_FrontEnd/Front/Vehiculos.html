@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../assets/img/icono.png" />
+    <title>TuriCor</title>
+
+    <!-- CSS -->
+    <link href="../assets/css/datetimepicker.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../assets/css/starter-template.css" rel="stylesheet" />
+
+    <!-- Js -->
+    <script src="../assets/js/jquery-3.4.1.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/locale/es.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bootstrap-table.min.js"></script>
+    <script src="../assets/js/bootstrap-datetimepicker.js"></script>
+
+    <script src="../assets/js/vehiculos.js"></script>
+</head>
+<body>
+    <form id="Form1" runat="server">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+            <a class="navbar-brand">
+                <img src="../assets/img/icono.png" />
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Front/Reserva.html"><h5>Reserva</h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Front/MisReservas.html"><h5>Mis reservas</h5></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../Front/Vehiculos.html"><h5><b>Vehículos<span class="sr-only">(current)</span></b></h5></a>
+                    </li>
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    <a class="btn btn-outline-light my-2 my-sm-0" href="Login.html">Cerrar sesión</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container" style="margin-top:80px">
+            <div class="row col-12">
+                <h3 class="col-4">Consulta de vehículos</h3>
+                <label id="lblUsuario" class="col-4 offset-4" style="text-align:right; font-size:smaller"></label>
+            </div>
+            <hr style="color: Navy; size:5px; margin-top:0px" />
+            <div class="form-group row col-10 offset-1">
+                <label class="col-2" style="margin-top:4px">Ciudad:</label>
+                <select class="form-control col-10" id="ddlCiudad"></select>
+            </div>
+            <div class="row col-12">
+                <div class="row col-10 offset-1">
+                    <label class="col-2" style="margin-top:4px">Fecha desde:</label>
+                    <input type="text" id="txtDesde" class="form-control col-2" />
+                    <script type="text/javascript">
+                        $(function () {
+                            var dateNow = new Date();
+                            $('#txtDesde').datetimepicker({
+                                format: 'DD/MM/YYYY',
+                                locale: 'es',
+                                defaultDate: dateNow
+                                });
+                        });
+                    </script>
+                    <select class="form-control col-2" id="txtHoraDesde">
+                        <option>00:00</option>
+                        <option>00:30</option>
+                        <option>01:00</option>
+                        <option>01:30</option>
+                        <option>02:00</option>
+                        <option>02:30</option>
+                        <option>03:00</option>
+                        <option>03:30</option>
+                        <option>04:00</option>
+                        <option>04:30</option>
+                        <option>05:00</option>
+                        <option>05:30</option>
+                        <option>06:00</option>
+                        <option>06:30</option>
+                        <option>07:00</option>
+                        <option>07:30</option>
+                        <option>08:00</option>
+                        <option>08:30</option>
+                        <option>09:00</option>
+                        <option>09:30</option>
+                        <option>10:00</option>
+                        <option>10:30</option>
+                        <option>11:00</option>
+                        <option>11:30</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>14:00</option>
+                        <option>14:30</option>
+                        <option>15:00</option>
+                        <option>15:30</option>
+                        <option>16:00</option>
+                        <option>16:30</option>
+                        <option>17:00</option>
+                        <option>17:30</option>
+                        <option>18:00</option>
+                        <option>18:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                        <option>21:30</option>
+                        <option>22:00</option>
+                        <option>22:30</option>
+                        <option>23:00</option>
+                        <option>23:30</option>
+                    </select>
+                    <label class="col-2" style="margin-top:4px">Fecha hasta:</label>
+                    <input type="text" id="txtHasta" class="form-control col-2" />
+                    <script type="text/javascript">
+                        $(function () {
+                            var dateNow = new Date();
+                            $('#txtHasta').datetimepicker({
+                                format: 'DD/MM/YYYY',
+                                locale: 'es',
+                                defaultDate: dateNow
+                            });
+                        });
+                    </script>
+                    <select class="form-control col-2" id="txtHoraHasta">
+                        <option>00:00</option>
+                        <option>00:30</option>
+                        <option>01:00</option>
+                        <option>01:30</option>
+                        <option>02:00</option>
+                        <option>02:30</option>
+                        <option>03:00</option>
+                        <option>03:30</option>
+                        <option>04:00</option>
+                        <option>04:30</option>
+                        <option>05:00</option>
+                        <option>05:30</option>
+                        <option>06:00</option>
+                        <option>06:30</option>
+                        <option>07:00</option>
+                        <option>07:30</option>
+                        <option>08:00</option>
+                        <option>08:30</option>
+                        <option>09:00</option>
+                        <option>09:30</option>
+                        <option>10:00</option>
+                        <option>10:30</option>
+                        <option>11:00</option>
+                        <option>11:30</option>
+                        <option>12:00</option>
+                        <option>12:30</option>
+                        <option>13:00</option>
+                        <option>13:30</option>
+                        <option>14:00</option>
+                        <option>14:30</option>
+                        <option>15:00</option>
+                        <option>15:30</option>
+                        <option>16:00</option>
+                        <option>16:30</option>
+                        <option>17:00</option>
+                        <option>17:30</option>
+                        <option>18:00</option>
+                        <option>18:30</option>
+                        <option>19:00</option>
+                        <option>19:30</option>
+                        <option>20:00</option>
+                        <option>20:30</option>
+                        <option>21:00</option>
+                        <option>21:30</option>
+                        <option>22:00</option>
+                        <option>22:30</option>
+                        <option>23:00</option>
+                        <option>23:30</option>
+                    </select>
+                </div>
+                <div class="row col-1">
+                    <a title="Buscar" class="btn btn col-12" onclick="cargarVehiculos();">🔍</a>
+                </div>
+            </div>
+            <br />
+            <hr style="color: Navy; size:5px; margin-top:0px" />
+            <div class="form-group row">
+                <div class="table-responsive col-12">
+                    <table id="tableVehiculos" class="table table-sm shadow-sm col-12">
+                        <thead class="thead-light">
+                            <tr>
+                                <th data-field="Marca">Marca</th>
+                                <th data-field="Modelo">Modelo</th>
+                                <th data-field="CantidadPuertas">Puertas</th>
+                                <th data-field="TipoCambio">Transmisión</th>
+                                <th data-field="TieneDireccion">Dirección</th>
+                                <th data-field="TieneAireAcon">Aire</th>
+                                <th data-field="Puntaje">Puntaje</th>
+                                <th data-field="PrecioPorDia">Precio (Día)</th>
+                                <th data-field="CantidadDisponible">Disponibles</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalError" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label>Error</label>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12" style="margin-left:10px;margin-right:10px;">
+                                <label id="lblError" style="margin-top:5px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="offset-8 col-4">
+                            <a href="javascript:void(0)" class="btn btn-primary col-12" onclick="hideError();">Aceptar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script language="javascript" type="text/javascript">
+            function showError() {
+                $('#modalError').modal('show');
+            }
+            $('#modalError').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            hideError();
+            function hideError() {
+                $('#modalError').modal('hide');
+            }
+        </script>
+    </form>
+</body>
+</html>

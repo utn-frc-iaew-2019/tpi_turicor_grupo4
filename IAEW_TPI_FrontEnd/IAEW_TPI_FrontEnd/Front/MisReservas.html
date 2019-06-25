@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../assets/img/icono.png" />
+    <title>TuriCor</title>
+
+    <!-- CSS -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="../assets/css/starter-template.css" rel="stylesheet" />
+
+    <!-- Js -->
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/bootstrap-table.min.js"></script>
+
+    <script src="../assets/js/misReservas.js"></script>
+</head>
+<body>
+    <form id="Form1" runat="server">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top shadow-sm">
+            <a class="navbar-brand">
+                <img src="../assets/img/icono.png" />
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Front/Reserva.html"><h5>Reserva</h5></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../Front/MisReservas.html"><h5><b>Mis reservas<span class="sr-only">(current)</span></b></h5></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Front/Vehiculos.html"><h5>Vehículos</h5></a>
+                    </li>
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                    <a class="btn btn-outline-light my-2 my-sm-0" href="Login.html">Cerrar sesión</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container" style="margin-top:80px">
+            <div class="row col-12">
+                <h3 class="col-4">Mis reservas</h3>
+                <label id="lblUsuario" class="col-4 offset-4" style="text-align:right; font-size:smaller"></label>
+            </div>
+            <hr style="color: Navy; size:5px; margin-top:0px" />
+            <div class="form-group row">
+                <div class="table-responsive col-12">
+                    <table id="tableReservas" class="table table-sm shadow-sm col-12">
+                        <thead class="thead-light">
+                            <tr>
+                                <th data-field="codigo_reserva">Codigo</th>
+                                <th data-field="fecha_reserva">Fecha Reserva</th>
+                                <th data-field="ciudad">Ciudad</th>
+                                <th data-field="vehiculo">Vehiculo</th>
+                                <th data-field="precio_total">Precio Total</th>
+                                <th data-field="id" data-formatter="LinkFormatter"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="modalDetalle" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label>Detalle Reserva</label>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row col-12">
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Código:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblCodigo"></label>
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Fecha:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblFechaReserva"></label>
+                        </div>
+                        <div class="form-group row col-12">
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Ciudad:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblCiudad"></label>
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Vehículo:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblVehiculo"></label>
+                        </div>
+                        <div class="form-group row col-12">
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Desde:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblFechaDesde"></label>
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Hasta:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblFechaHasta"></label>
+                        </div>
+                        <div class="form-group row col-12">
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Retiro:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblRetiro"></label>
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Entrega:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblEntrega"></label>
+                        </div>
+                        <div class="form-group row col-12">
+                            <label class="col-1" style="margin-top:6px; font-size:small;">Precio:</label>
+                            <label class="col-5" style="margin-top:4px; font-weight:bold;" id="lblPrecio"></label>
+                            <label class="col-6" style="margin-top:4px; visibility:hidden" id="lblId"></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:void(0)" class="btn btn-danger col-12">Cancelar reserva</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script language="javascript" type="text/javascript">
+            function showDetalle() {
+                $('#modalDetalle').modal('show');
+            }
+            $('#modalDetalle').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            hideDetalle();
+            function hideDetalle() {
+                $('#modalDetalle').modal('hide');
+            }
+        </script>
+        <div class="modal" id="modalError" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label>Error</label>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12" style="margin-left:10px;margin-right:10px;">
+                                <label id="lblError" style="margin-top:5px;"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="offset-8 col-4">
+                            <a href="javascript:void(0)" class="btn btn-primary col-12" onclick="hideError();">Aceptar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script language="javascript" type="text/javascript">
+            function showError() {
+                $('#modalError').modal('show');
+            }
+            $('#modalError').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            hideError();
+            function hideError() {
+                $('#modalError').modal('hide');
+            }
+        </script>
+    </form>
+</body>
+</html>
