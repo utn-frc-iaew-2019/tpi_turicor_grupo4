@@ -27,6 +27,7 @@ class Reserva(Resource):
         ve = reserva['Reserva']['VehiculoPorCiudadEntity']['VehiculoEntity']
         
         data = {
+                'id': reserva_id,
                 'codigo_reserva': reserva['Reserva']['CodigoReserva'],
                 'fecha_reserva': fecha_dt_to_string(reserva['Reserva']['FechaReserva']),
                 'fecha_retiro': fecha_dt_to_string(reserva['Reserva']['FechaHoraRetiro']),
