@@ -1,0 +1,17 @@
+Para levantar API Rest:
+
+Requerimientos:
+
++ Postgres (Levantada en puerto 5432 - con usuario "postgres", y base creada "iaew")
+
++ Python 3.5+
+
+Pasos:
+
++ Armar environment -> Instalar dependencias en requirements.txt (recomendado usar virtualenv)
+
++ Ejecutar scripts/create_tables.py
+
++ Setear variables de environment ("source flask-env")
+
++ Levantar servidor ejecutando "flask run"
