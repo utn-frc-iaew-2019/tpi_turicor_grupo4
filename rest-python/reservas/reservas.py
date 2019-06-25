@@ -22,6 +22,7 @@ class Reservas(Resource):
         reservas = []
         for r in cur:
             data = {
+                    'id': r[0],
                     'codigo_reserva': r[1],
                     'fecha_reserva': fecha_dt_to_string(r[5]),
                     'fecha_retiro': fecha_dt_to_string(r[6]),
@@ -84,6 +85,8 @@ class Reservas(Resource):
                 lugar_devolucion,
                 lugar_retiro,
                 dni)
+        print("Reserva FRESCA")
+        print(reserva)
 
         fecha_reserva = reserva['Reserva']['FechaReserva']
         fecha_reserva_formateada = "{0}/{1}/{2} {3}:{4}:{5}".format(

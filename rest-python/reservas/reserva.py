@@ -19,8 +19,10 @@ class Reserva(Resource):
         cur = conn.cursor()
         cliente_id = request._sesion['id']
         cur.execute("""SELECT * FROM reservas WHERE id=%s;""", (reserva_id,))
-        query = cur.fectchone()
+        query = cur.fetchone()
         codigo = query[1]
+        print("Codigo")
+        print(codigo)
         reserva = api.consultar_reserva(codigo)
         ve = reserva['Reserva']['VehiculoPorCiudadEntity']['VehiculoEntity']
         
@@ -32,8 +34,8 @@ class Reserva(Resource):
                 'lugar_retiro': reserva['Reserva']['LugarRetiro'],
                 'lugar_devolucion': reserva['Reserva']['LugarDevolucion'],
                 'precio_total': query[12],
-                'vehiculo': ve['Marca'] + ', ' + ve['Modelo'],
-                'vehiculo_ciudad_id': reserva['Reserva']['VehiculoPorCiudadEntity']['VehiculoPorCiudadId'],
+                'vehiculo': query[4],
+                'vehiculo_ciudad_id': query[2],
                 'ciudad': query[3]
                 }
         cur.close()
@@ -59,7 +61,9 @@ class Reserva(Resource):
         query = cur.fetchone()
         codigo = query[1]
         reserva = api.cancelar_reserva(codigo)
+        print(reserva)
         ve = reserva['Reserva']['VehiculoPorCiudadEntity']['VehiculoEntity']
+        print(ve)
         
         data = {
                 'codigo_reserva': reserva['Reserva']['CodigoReserva'],
@@ -69,8 +73,8 @@ class Reserva(Resource):
                 'lugar_retiro': reserva['Reserva']['LugarRetiro'],
                 'lugar_devolucion': reserva['Reserva']['LugarDevolucion'],
                 'precio_total': query[12],
-                'vehiculo': ve['Marca'] + ', ' + ve['Modelo'],
-                'vehiculo_ciudad_id': reserva['Reserva']['VehiculoPorCiudadEntity']['VehiculoPorCiudadId'],
+                'vehiculo': query[4],
+                'vehiculo_ciudad_id': query[2],
                 'ciudad': query[3]
                 }
         # Borro de BD
