@@ -24,9 +24,7 @@ def consultar_ciudades(id_pais):
 def consultar_reserva(codigo):
     print("Consultar reserva")
     print(codigo)
-    print(type(codigo))
-    #return client.service.ReservarVehiculo({ 'CodigoReserva': str(codigo) }, _soapheaders=credentials)
-    return client.service.ReservarVehiculo(str(codigo), _soapheaders=credentials)
+    return client.service.ReservarVehiculo({ 'CodigoReserva': codigo }, _soapheaders=credentials)
 
 def consultar_vehiculos_disponibles(id_ciudad, fecha_hora_retiro, fecha_hora_devolucion):
     """
