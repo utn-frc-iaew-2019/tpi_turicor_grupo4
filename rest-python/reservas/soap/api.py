@@ -26,7 +26,7 @@ def consultar_reserva(codigo):
     print(codigo)
     print(type(codigo))
     #return client.service.ReservarVehiculo({ 'CodigoReserva': str(codigo) }, _soapheaders=credentials)
-    return client.service.ReservarVehiculo(str(codigo), _soapheaders=credentials)
+    return client.service.ConsultarReserva({ 'CodigoReserva': codigo }, _soapheaders=credentials)
 
 def consultar_vehiculos_disponibles(id_ciudad, fecha_hora_retiro, fecha_hora_devolucion):
     """
