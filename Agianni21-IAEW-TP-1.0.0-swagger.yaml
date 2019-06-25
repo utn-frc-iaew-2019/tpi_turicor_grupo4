@@ -1,0 +1,271 @@
+swagger: '2.0'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Simple Inventory API
+  # put the contact info for your development or API team
+  contact:
+    email: agustinborello21@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+- name: users
+  description: Usuarios del servicio
+
+paths:
+  /ciudades:
+    get:
+      tags:
+      - users
+      summary: lista ciudades disponibles
+      operationId: consultarCiudades
+      description: |
+        Lista todas las ciudades disponibles
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: limit
+        description: maximum number of records to return
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 50
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Ciudad'
+        401:
+          description: No autorizado
+  /vehiculos_disponibles:
+    get:
+      tags:
+      - users
+      summary: lista vehiculos disponibles en una ciudad
+      operationId: consultarVehiculosDisponibles
+      description: |
+        Lista todos los vehiculos disponibles en una ciudad
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: ciudad
+        description: "Id de ciudad"
+        type: integer
+      - in: query
+        name: fecha_retiro
+        description: "Fecha a retirar vehiculo - (Formato “DD/MM/RRRR HH:MI:SS)"
+        type: string
+      - in: query
+        name: fecha_devolucion
+        description: "Fecha a retirar vehiculo - (Formato “DD/MM/RRRR HH:MI:SS)"
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/VehiculoDisponible'
+        401:
+          description: No autorizado
+  /reservas:
+    post:
+      tags:
+      - users
+      summary: registra una nueva reserva
+      operationId: registrarReserva
+      description: Registra una nueva reserva
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: ReservaData
+        description: Datos de reserva a registrar
+        schema:
+          $ref: '#/definitions/ReservaItem'
+      responses:
+        201:
+          description: Reserva creada
+          schema:
+            $ref: '#/definitions/Reserva'
+        401:
+          description: No autorizado
+    get:
+      tags:
+      - users
+      summary: Listar reservas
+      operationId: consultarReservas
+      description: Listar reservas
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Reservas
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Reserva'
+        401:
+          description: No autorizado
+  /reserva/{id}:
+    get:
+      tags:
+      - users
+      summary: Devuelve el detalle de una reserva
+      produces:
+      - application/json
+      operationId: consultarReserva
+      parameters:
+      - name: id
+        in: path
+        description: Id de la reserva
+        required: true
+        type: string
+      responses:
+        200:
+          description: Detalle reserva
+          schema:
+            $ref: '#/definitions/Reserva'
+    delete:
+      tags:
+      - users
+      summary: Cancela una reserva
+      produces:
+      - application/json
+      operationId: cancelarReserva
+      parameters:
+      - name: id
+        in: path
+        description: Id de la reserva
+        required: true
+        type: string
+      responses:
+        201:
+          description: Detalle reserva
+          schema:
+            $ref: '#/definitions/Reserva'
+definitions:
+  Ciudad:
+    type: object
+    required: 
+    - id
+    - descripcion
+    properties:
+      id:
+        type: integer
+        example: 5
+      descripcion:
+        type: string
+        example: "Buenos Aires"
+  VehiculoDisponible:
+    type: object
+    properties:
+      CantidadDisponible:
+        type: integer
+        example: 5
+      CantidadPuertas:
+        type: integer
+        example: 4
+      Id:
+        type: integer
+        example: 2
+      Marca:
+        type: string
+        example: "Renault"
+      Modelo:
+        type: string
+        example: "Logan"
+      PrecioPorDia:
+        type: number
+        example: 390
+      Puntaje:
+        type: integer
+        example: 4
+      TieneAireAcon:
+        type: boolean
+        example: True
+      TieneDireccion:
+        type: boolean
+        example: True
+      TipoCambio:
+        type: string
+        example: "M"
+      VehiculoCiudadId:
+        type: integer
+        example: 23
+  Reserva:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 4
+      codigo_reserva:
+        type: string
+        example: "SK94A"
+      fecha_reserva:
+        type: string
+        example: ""
+      fecha_retiro:
+        type: string
+        example: ""
+      fecha_devolucion:
+        type: string
+        example: ""
+      lugar_retiro:
+        type: string
+        example: "Hotel"
+      lugar_devolucion:
+        type: string
+        example: "Aeropuerto"
+      precio_total:
+        type: number
+        example: 4000
+      vehiculo:
+        type: string
+        example: "Ford, Focus"
+      vehiculo_ciudad_id:
+        type: integer
+        example: 5
+      ciudad:
+        type: string
+        example: "Cordoba, Argentina"
+  ReservaItem:
+    type: object
+    properties:
+      nombre:
+        type: string
+        example: "Juan"
+      apellido:
+        type: string
+        example: "Perez"
+      fechahora_desde:
+        type: string
+        example: "21/09/2019 18:10:00"
+      fechahora_hasta:
+        type: string
+        example: "23/09/2019 18:10:00"
+      dni:
+        type: integer
+        example: 39305144
+      lugar_retiro:
+        type: string
+        example: "Hotel"
+      lugar_devolucion:
+        type: string
+        example: "Aeropuerto"
+      id_vehiculo_ciudad:
+        type: integer
+        example: 5
+      id_ciudad:
+        type: integer
+        example: 3
