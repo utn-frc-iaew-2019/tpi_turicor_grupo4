@@ -30,7 +30,7 @@ function cargarCiudades() {
     (
         {
             method: "GET",
-            url: "http://54.213.148.61:8080/ciudades",
+            url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/ciudades",
             contentType: "application/json; charset=utf-8",
             headers: { user_code: user_code_var }
         }
@@ -83,7 +83,7 @@ function cargarVehiculos() {
         (
             {
                 method: "GET",
-                url: "http://54.213.148.61:8080/vehiculos_disponibles?ciudad=" + ciudad + "&fecha_retiro=" + fechaDesdeD + " " + horaDesdeD + ":00" + "&fecha_devolucion=" + fechaHastaD + " " + horaHastaD + ":00",
+                url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/vehiculos_disponibles?ciudad=" + ciudad + "&fecha_retiro=" + fechaDesdeD + " " + horaDesdeD + ":00" + "&fecha_devolucion=" + fechaHastaD + " " + horaHastaD + ":00",
                 contentType: "application/json; charset=utf-8",
                 headers: { user_code: user_code_var }
             }
@@ -188,7 +188,7 @@ function reservarVehiculo() {
         (
             {
                 method: "POST",
-                url: "http://54.213.148.61:8080/reservas",
+                url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/reservas",
                 contentType: "application/json; charset=utf-8",
                 headers: { user_code: user_code_var },
                 data: JSON.stringify({

@@ -44,7 +44,7 @@ function cargarReservas() {
     (
         {
             method: "GET",
-            url: "http://54.213.148.61:8080/reservas",
+            url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/reservas",
             contentType: "application/json; charset=utf-8",
             headers: { user_code: user_code_var }
         }
@@ -104,7 +104,7 @@ function seleccionarReserva(codigo) {
     (
         {
             method: "GET",
-            url: "http://54.213.148.61:8080/reservas/" + codigo,
+            url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/reservas/" + codigo,
             contentType: "application/json; charset=utf-8",
             headers: { user_code: user_code_var }
         }
@@ -125,7 +125,7 @@ function reservaObtenida(msg) {
     $('#lblFechaDesde').html(msg.fecha_retiro);
     $('#lblFechaHasta').html(msg.fecha_devolucion);
     $('#lblRetiro').html(msg.lugar_retiro);
-    $('#lblDevolucion').html(msg.lugar_devolucion);
+    $('#lblEntrega').html(msg.lugar_devolucion);
     $('#lblPrecio').html(msg.precio_total);
     showDetalle();
 }
@@ -140,7 +140,7 @@ function cancelarReserva() {
     (
         {
             method: "DELETE",
-            url: "http://54.213.148.61:8080/reservas/" + codigo,
+            url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/reservas/" + codigo,
             contentType: "application/json; charset=utf-8",
             headers: { user_code: user_code_var }
         }

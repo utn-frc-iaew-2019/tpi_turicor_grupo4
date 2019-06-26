@@ -7,7 +7,7 @@ function OnReady() {
         (
             {
                 method: "GET",
-                url: "http://54.213.148.61:8080/login?code=" + urlParams.get('code'),
+                url: "http://ec2-35-164-13-118.us-west-2.compute.amazonaws.com:8080/login?code=" + urlParams.get('code'),
                 contentType: "application/json; charset=utf-8"
             }
         )
