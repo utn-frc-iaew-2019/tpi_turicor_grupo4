@@ -12,7 +12,7 @@ cryptography==2.7
 defusedxml==0.6.0
 Flask==1.0.3
 Flask-RESTful==0.3.7
-httplib2==0.13.0
+httplib2==0.19.0
 idna==2.8
 isodate==0.6.0
 itsdangerous==1.1.0
